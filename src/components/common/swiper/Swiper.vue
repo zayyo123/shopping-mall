@@ -7,7 +7,7 @@
       </slot>
       <div class="indicator">
         <slot name="indicator" v-if="showIndicator && slideCount>1">
-          <div v-for="(item, index) in slideCount" class="indi-item" :class="{active: index === currentIndex-1}" :key="index"></div>
+          <div v-for="(item, index) in slideCount" class="indi-item" :class="{active: index === currentIndex-1}" :key="index.id"></div>
         </slot>
       </div>
     </div>
@@ -50,13 +50,14 @@
 
         // 2.开启定时器
         this.startTimer();
-      }, 3000)
+      }, 100)
     },
     methods: {
 		  /**
        * 定时器操作
        */
       startTimer: function () {
+        // setInterval() 方法会不停地调用函数，直到 clearInterval() 被调用或窗口被关闭
 		    this.playTimer = window.setInterval(() => {
 		      this.currentIndex++;
 		      this.scrollContent(-this.currentIndex * this.totalWidth);
@@ -126,11 +127,17 @@
 
         // 3.如果大于1个, 那么在前后分别添加一个slide
         if (this.slideCount > 1) {
+          // 把slidesEls[0]克隆给cloneFirst
           let cloneFirst = slidesEls[0].cloneNode(true);
+          // 把传入的最后一张图片克隆给cloneLast
           let cloneLast = slidesEls[this.slideCount - 1].cloneNode(true);
+          // 插入范围第一张到最后一张
           swiperEl.insertBefore(cloneLast, slidesEls[0]);
+          // 插入内容是cloneFirst
           swiperEl.appendChild(cloneFirst);
+          // 把传入图片的宽度赋值给组件
           this.totalWidth = swiperEl.offsetWidth;
+          // 吧传入图片的样式赋值给组件
           this.swiperStyle = swiperEl.style;
         }
 

@@ -1,47 +1,59 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-
-const Home = () =>
-    import ('../views/home/Home')
-const Category = () =>
-    import ('../views/category/Category')
-const Profile = () =>
-    import ('../views/profile/Profile')
-const Cart = () =>
-    import ('../views/cart/Cart')
-const Detail = () =>import('../views/detail/Detail')
+import VueRouter from 'vue-router'
 
 
-Vue.use(Router)
-
-export default new Router({
-    routes: [{
-            path: '',
-            redirect: '/home'
-        },
-        {
-            path: '/home',
-            component: Home
-        },
-        {
-            path: '/category',
-            component: Category
-        },
-        {
-            path: '/profile',
-            component: Profile
-        },
-        {
-            path: '/cart',
-            component: Cart
-        },
-        {
-            path:'/detail/:iid',
-            component:Detail
-        }
-    ],
-    mode: 'history',
+const Home = () => import('../views/home/Home')
+const Category = () => import('../views/category/Category')
+const Shopcart = () => import('../views/shopcart/Shopcart')
+const Profile = () => import('../views/profile/Profile')
+const Detail = () => import('../views/detail/Detail')
 
 
+//1.安装插件
+Vue.use(VueRouter)
 
+//2.创建路由对象
+const routes = [
+    {
+        path:'',
+        redirect:'/home'
+    },
+    {
+        path:'/home',
+        component: Home
+    },
+    {
+        path:'/category',
+        component: Category
+    },
+    {
+        path:'/shopcart',
+        component: Shopcart
+    },
+    {
+        path:'/profile',
+        component: Profile
+    },
+    {
+        path:'/detail/:iid',
+        component: Detail
+    }
+]
+
+const router = new VueRouter({
+  mode: 'hash',
+  base: process.env.BASE_URL,
+  routes,
+  mode: 'history',
 })
+
+router.onError((error) => {
+    const pattern = /Loading chunk (\d)+ failed/g;
+    const isChunkLoadFailed = error.message.match(pattern);
+    const targetPath = router.history.pending.fullPath;
+    if (isChunkLoadFailed) {
+    router.replace(targetPath);
+    }
+});
+
+export default router

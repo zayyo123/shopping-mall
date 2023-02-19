@@ -1,5 +1,5 @@
 <template>
-<div id="shop-item">
+  <div id="shop-item">
     <!-- <div class="item-selector">
       <CheckButton @checkBtnClick="checkedChange" v-model="itemInfo.checked"></CheckButton>
     </div>  -->
@@ -22,29 +22,33 @@
 </template>
 
 <script>
-import CheckButton from 'components/content/checkButton/CheckButton';
-export default {
-  name: 'CartListItem',
- props:{
-   itemInfo:Object,
- },
- components:{
-   CheckButton
- },
- methods:{
-   checkedChange(){
-     this.itemInfo.check =!this.itemInfo.checked;
-   }
- },
- computed:{
-   showImage(){
-     return "http:"+this.itemInfo.image;
-   }
- }
- }
+  import CheckButton from 'components/content/checkButton/CheckButton';
+
+  export default {
+    name: "ShopCartItem",
+    props: {
+      itemInfo: Object,
+      default(){
+        return {}
+      }
+    },
+    components: {
+      CheckButton
+    },
+    methods: {
+      checkedChange() {
+        this.itemInfo.checked = !this.itemInfo.checked;
+      }
+    },
+    computed:{
+      showImage(){
+          return "http:" + this.itemInfo.image;
+      }
+  },
+  }
 </script>
 
-<style  scoped>
+<style scoped>
   #shop-item {
     width: 100%;
     display: flex;

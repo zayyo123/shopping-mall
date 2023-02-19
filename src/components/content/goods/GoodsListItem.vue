@@ -1,40 +1,48 @@
 <template>
   <div class="goods-item" @click="itemClick">
-  <img :src="showImage" alt="" @load="imageLoad">
-<div class="goods-info">
-    <p>{{goodsItem.title}}</p>
-    <span class="price">{{goodsItem.price}}</span>
-    <span class="collect">{{goodsItem.cfav}}</span>
-</div>
+    <img v-lazy="showImage" alt="" @load="imgLoad">
+    <div class="goods-info" >
+      <p>{{product.title}}</p>
+      <span class="price">{{product.price}}</span>
+      <span class="collect">{{product.cfav}}</span>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'GoodsListItem',
-  props:{
-    goodsItem:{
-     type:Object,
-     default(){
-         return{}
-     }
- } 
-},
-computed:{
-  showImage(){
-    return this.goodsItem.image || this.goodsItem.img || this.goodsItem.show.img
+  export default {
+    name: "GoodsListItem",
+    props: {
+      product: {
+        type: Object,
+        default() {
+          return {}
+        }
+      }
+    },
+    created(){
+      console.log(this.product)
+    },
+    computed:{
+      showImage(){
+        return this.product.img || this.product.image || this.product.show.img;
+      }
+    },
+    methods:{
+      imgLoad(){
+        this.$bus.$emit('itemImageLoad');
+
+        // if(this.$route.path.indexOf('/home')){
+        //   this.$bus.$emit('homeItemImageLoad');
+        // } else if(this.$route.path.indexOf('/detail')){
+        //   this.$bus.$emit('detailItemImageLoad');
+        // }
+      },
+      itemClick(){
+        this.$router.push('/detail/' + this.product.iid);
+      }
+    }
   }
-},
-methods:{
-  imageLoad(){
-    this.$bus.$emit('itemImageLoad')
-  },
-  itemClick(){
-        this.$router.push('/detail/'+this.goodsItem.iid)
-  }
-}
-}
- 
 </script>
 
 <style scoped>
@@ -42,7 +50,7 @@ methods:{
     padding-bottom: 40px;
     position: relative;
 
-    width: 48%;
+    width: 46%;
   }
 
   .goods-item img {

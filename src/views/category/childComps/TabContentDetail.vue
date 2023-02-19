@@ -1,6 +1,6 @@
 <template>
   <grid-view  :lineSpace="15" :v-margin="20" v-if="categoryDetail">
-    <goods-list-item v-for="(item, index) in categoryDetail" :key="index" :goodsItem="item"></goods-list-item>
+    <goods-list-item v-for="(item, index) in categoryDetail" :key="index" :product="item"></goods-list-item>
   </grid-view>
 </template>
 

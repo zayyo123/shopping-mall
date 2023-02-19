@@ -1,6 +1,6 @@
 <template>
   <div class="bottom-menu">
-    <check-button class="select-all" @checkBtnClick="checkBtnClick" :isChecked="isSelectAll"></check-button>
+    <CheckButton class="select-all" @checkBtnClick="checkBtnClick" :isChecked="isSelectAll"></CheckButton>
     <span>全选</span>
     <span class="total-price">合计:{{totalPrice}}</span>
     <span class="buy-product" @click="calcClick">去计算({{checkLength}})</span>
@@ -17,6 +17,7 @@
     <div class="calculate">
         <span class="buy-product">去计算({{checkLength}})</span>
     </div>
+    
   </div> -->
 </template>
 
@@ -27,6 +28,11 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'CartBottomBar',
+  data() { 
+    return {
+        
+    }
+  },
   components:{
       CheckButton
   },
